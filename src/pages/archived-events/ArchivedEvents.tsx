@@ -3,14 +3,15 @@ import Axios from 'axios';
 import React, { Component } from 'react';
 import AnEvent from '../../components/an-event/AnEvent';
 import Aevent from '../../models/models';
-import './Home.css';
+import './ArchivedEvents.css';
 
-class Home extends Component {
+class ArchivedEvents extends Component {
   state:{events: Aevent[]} = {
     events: []
   }
   // axios requests
   componentDidMount(){
+    console.log("homedidmount")
     Axios.get('/events')
       .then(res => {
         //filter by current events
@@ -24,13 +25,13 @@ class Home extends Component {
     .filter(event => {
       var d= new Date(event.dueDate).getTime();
       var now = new Date().getTime();
-      return d>now;
+      return d<now;
     })
     //sort by next upcoming event
     .sort((a: Aevent, b: Aevent) => {
       a.dueDate=new Date(a.dueDate);
       b.dueDate=new Date(b.dueDate)
-      return a.dueDate.getTime() -  b.dueDate.getTime();
+      return b.dueDate.getTime() -  a.dueDate.getTime();
   })
     .map(event =>{
      return <AnEvent
@@ -51,4 +52,4 @@ class Home extends Component {
   
 };
 
-export default Home;
+export default ArchivedEvents;

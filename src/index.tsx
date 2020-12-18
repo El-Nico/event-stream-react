@@ -1,7 +1,11 @@
+import Axios from 'axios';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+
+//axios global config
+Axios.defaults.baseURL = 'https://dorset-events.herokuapp.com/api/';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

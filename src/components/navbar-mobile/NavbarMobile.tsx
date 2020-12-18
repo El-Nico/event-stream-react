@@ -1,6 +1,6 @@
 import React from 'react';
 import './NavbarMobile.css';
-import { IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonMenuButton, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonMenuButton, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 
 interface ContainerProps { }
 
@@ -10,10 +10,8 @@ const NavbarMobile: React.FC<ContainerProps> = () => {
     <IonToolbar>
         <IonGrid>
             <IonRow>
-                <IonCol size="1">
-                <IonButtons slot="start">
-        <IonMenuButton />
-      </IonButtons>
+                <IonCol size="2">
+                    <IonMenuButton></IonMenuButton>
                 </IonCol>
                 <IonCol className="ion-align-self-center">
                     <div id="container" style={{width: "100%"}}>
