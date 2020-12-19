@@ -1,0 +1,16 @@
+Part1
+setup pages as containers in containers folder
+download routing chapter
+plan components and create them in components folder
+setup routing and display madison components components
+
+main func
+axios add
+home read display
+event card
+EDIT
+delete
+
+create the event card
+get axios to read and display existing events and parse it by params
+do same for archived page
