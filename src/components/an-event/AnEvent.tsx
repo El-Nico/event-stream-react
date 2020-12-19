@@ -16,18 +16,12 @@ import React, { useEffect, useState } from "react";
 import "./AnEvent.css";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import Aevent from "../../models/models";
-import { Observable, Subscription, timer } from "rxjs";
+import { Subscription, timer } from "rxjs";
+import Axios from "axios";
 
 interface ContainerProps extends RouteComponentProps {
   event: Aevent;
   routerprops: any;
-}
-
-interface timestamp {
-  days: number;
-  hours: number;
-  minutes: number;
-  seconds: number;
 }
 
 const AnEvent: React.FC<ContainerProps> = (props) => {
@@ -39,21 +33,29 @@ const AnEvent: React.FC<ContainerProps> = (props) => {
     seconds: 0,
   });
 
+  //when edit button clicked navigate to add event page and pass the event as state
   const handleEdit = () => {
-    console.log(props);
     props.history.push({
       pathname: "/edit-event/" + props.event._id,
+      state: { event: props.event },
     });
   };
-  const handleDelete = () => {};
-  let timestampTimer: Subscription;
 
+  //axios call deletes event from database
+  const handleDelete = () => {
+    Axios.delete("/event/" + props.event._id).then((res) => {
+      //refresh the page
+      window.location.reload();
+    });
+  };
+
+  //set the size of the image on card
   let imgSize = "400";
   let imgSrc = `https://source.unsplash.com/${imgSize}x${imgSize}/?${props.event.course}`;
 
   useEffect(() => {
     //an rxjs subscription that emits a new timestamp every second
-    timestampTimer = timer(0, 1000).subscribe((val) => {
+    const timestampTimer: Subscription= timer(0, 1000).subscribe((val) => {
       // Get todays date and time
       var now = new Date().getTime();
 
@@ -81,11 +83,12 @@ const AnEvent: React.FC<ContainerProps> = (props) => {
       });
     });
 
-    return ()=>{
-        //cleanup work in useeffect()
-        timestampTimer.unsubscribe()
+    return () => {
+      //cleanup work in useeffect() | unsubscribe from timer on dismount prevents memory leakage and slow down
+      timestampTimer.unsubscribe();
     };
   }, []);
+
   return (
     <IonCard>
       <img src={imgSrc} className="display-image" />
@@ -98,8 +101,8 @@ const AnEvent: React.FC<ContainerProps> = (props) => {
           {props.event.title} | {props.event.course}
         </IonCardTitle>
         <IonCardSubtitle class="centre">
-          Due on {props.event.dueDate.toDateString()} |{" "}
-          {props.event.dueDate.toLocaleTimeString()}
+          Due on {new Date(props.event.dueDate).toDateString()} |{" "}
+          {new Date(props.event.dueDate).toLocaleTimeString()}
         </IonCardSubtitle>
       </IonCardHeader>
       <IonCardContent class="centre">

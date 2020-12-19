@@ -1,12 +1,12 @@
+import { IonCol, IonGrid, IonHeader, IonMenuButton, IonRow, IonText, IonToolbar } from '@ionic/react';
 import React from 'react';
 import './NavbarMobile.css';
-import { IonButton, IonButtons, IonCol, IonContent, IonGrid, IonHeader, IonMenuButton, IonPage, IonRow, IonText, IonTitle, IonToolbar } from '@ionic/react';
 
 interface ContainerProps { }
 
 const NavbarMobile: React.FC<ContainerProps> = () => {
   return (
-    <IonHeader translucent>
+    <IonHeader translucent className="navbar">
     <IonToolbar>
         <IonGrid>
             <IonRow>
